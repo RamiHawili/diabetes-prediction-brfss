@@ -1,0 +1,56 @@
+## Le Deep Learning — L'essentiel
+
+### C'est quoi le Deep Learning ?
+
+C'est une branche du Machine Learning où au lieu d'utiliser un modèle simple (comme une droite), on utilise un **réseau de neurones** — un ensemble de fonctions connectées les unes aux autres. Plus le réseau est profond (beaucoup de couches), plus il peut apprendre des choses complexes.
+
+---
+
+### Comment fonctionne un neurone artificiel ?
+
+Chaque neurone fait deux choses dans l'ordre :
+
+**1. Agrégation** — il fait la somme pondérée de ses entrées :
+> Z = w1·x1 + w2·x2 + ... + b
+
+Les **poids w** définissent l'importance de chaque variable. Le **biais b** décale la frontière de décision.
+
+**2. Activation** — il transforme ce résultat en une sortie exploitable via une fonction d'activation (sigmoid, ReLU, etc.)
+
+---
+
+### Comment le réseau apprend ?
+
+L'entraînement se répète en 4 étapes en boucle :
+
+| Étape | Ce qui se passe |
+|-------|----------------|
+| **Forward propagation** | Les données traversent le réseau de la 1ère à la dernière couche → produit une prédiction |
+| **Calcul de l'erreur** | On mesure l'écart entre la prédiction et la vraie valeur via une **fonction coût** (log-loss pour la classification binaire) |
+| **Back-propagation** | On remonte le réseau couche par couche pour calculer comment chaque paramètre contribue à l'erreur |
+| **Mise à jour** | On corrige les poids via la **descente de gradient** : W = W - α · gradient |
+
+Le **taux d'apprentissage α** contrôle la taille des pas — trop grand : le modèle oscille, trop petit : il apprend lentement.
+
+---
+
+### Les fonctions d'activation — quand utiliser quoi ?
+
+| Fonction | Formule simplifiée | Sortie | Quand l'utiliser |
+|----------|--------------------|--------|-----------------|
+| **Sigmoid** | 1 / (1 + e^-x) | Entre 0 et 1 | Couche de sortie — classification binaire |
+| **ReLU** | max(0, x) | 0 ou x | Couches cachées — choix par défaut |
+| **Tanh** | (e^x - e^-x) / (e^x + e^-x) | Entre -1 et 1 | Couches cachées — données centrées |
+| **Softmax** | e^xi / somme(e^xj) | Distribution de probabilités | Couche de sortie — classification multi-classes |
+
+Le problème principal de Sigmoid et Tanh : le **gradient qui disparaît** (vanishing gradient) — dans les réseaux profonds, les gradients deviennent trop petits pour mettre à jour les premières couches. C'est pour ça que **ReLU est préférée** dans les couches cachées.
+
+---
+
+### En résumé — ce qu'il faut retenir absolument
+
+- Un neurone = agrégation (somme pondérée) + activation (fonction non-linéaire)
+- Un réseau = des couches de neurones connectées
+- L'entraînement = forward → erreur → backward → mise à jour, répété des centaines de fois
+- La descente de gradient trouve les poids qui minimisent l'erreur
+- Pour la classification binaire → Sigmoid en sortie, ReLU dans les couches cachées
